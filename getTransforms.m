@@ -1,4 +1,4 @@
-function [ transforms ] = get_transforms( tree, transforms, node, parent_t )
+function [ transforms ] = getTransforms( tree, transforms, node, parent_t )
 % @param tree           output of loadbvh
 % @param transforms     empty matrix of dimension # nodes x 3
 % @param node           index of current node
@@ -8,7 +8,7 @@ function [ transforms ] = get_transforms( tree, transforms, node, parent_t )
     t = tree(node).offsetFromParent; % xyz translation
     children = tree(node).children;
     for i=1:size(children,2)
-        transforms = get_transforms(tree, transforms, children(i), t);
+        transforms = getTransforms(tree, transforms, children(i), t);
     end
     transforms(node,:) = t + parent_t;
 end
