@@ -29,7 +29,7 @@ for i = 1:num_files
         joint_info(j).t_xyz = skeleton(j).t_xyz(:,1:time_step(i):end);
         joint_info(j).R_xyz = skeleton(j).R_xyz(:,1:time_step(i):end);
     end
-    transformations = [transformations; joint_info];
+    transformations = [transformations, joint_info];
 end
 
 % truncate data
