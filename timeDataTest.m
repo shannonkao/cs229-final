@@ -2,4 +2,4 @@
 % and n is the number of joints. Does not yet work with varibale number of
 % joints
 
-timePoints = getTimeData('CMU_walkcycles');
+timePoints = getData('CMU_walkcycles');
