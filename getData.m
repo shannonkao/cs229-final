@@ -1,4 +1,4 @@
-function [transformations] = getData(folderName)
+function [num_points, transformations] = getData(folderName)
 oldfolder = cd(folderName);
 
 files = dir('*.bvh');
@@ -23,25 +23,27 @@ for i = 1:num_files
         num_points = size(time,2)/time_step(i);
     end
     
-    joint_info = struct([]);
+    %joint_info = struct([]);
     for j = 1:size(skeleton,2)
-        joint_info(j).abs_pos = absolute_transforms(j,:);
-        joint_info(j).t_xyz = skeleton(j).t_xyz(:,1:time_step(i):end);
-        joint_info(j).R_xyz = skeleton(j).R_xyz(:,1:time_step(i):end);
+        if size(skeleton(j).T,1) == 0
+            continue;
+        end
+        joint_info.abs_pos = absolute_transforms(j,:);
+        joint_info.t_xyz = skeleton(j).t_xyz(:,1:time_step(i):end);
+        joint_info.R_xyz = skeleton(j).R_xyz(:,1:time_step(i):end);
+        joint_info.T = skeleton(j).T(:,:,1:time_step(i):end);
+        transformations = [transformations, joint_info];
     end
-    transformations = [transformations, joint_info];
+    
 end
 
 % truncate data
 num_points = floor(num_points);
 for i = 1:size(transformations,1)
     for j = 1:size(transformations,2)
-        if size(transformations(i,j).t_xyz,1) > 0
-            transformations(i,j).t_xyz = transformations(i,j).t_xyz(:,1:num_points);
-        end
-        if size(transformations(i,j).R_xyz,1) > 0
-            transformations(i,j).R_xyz = transformations(i,j).R_xyz(:,1:num_points);
-        end
+        transformations(i,j).t_xyz = transformations(i,j).t_xyz(:,1:num_points);
+        transformations(i,j).R_xyz = transformations(i,j).R_xyz(:,1:num_points);
+        transformations(i,j).T = transformations(i,j).T(:,:,1:num_points);
     end
 end
 
