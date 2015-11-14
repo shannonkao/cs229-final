@@ -57,3 +57,8 @@ for i = 1:k
     j = find(clusters == i);
     scatter3(joints(j,1), joints(j,2), joints(j,3));
 end
+
+title('Joint Clusters', 'FontSize', 14)
+xlabel('x','FontSize', 14)
+ylabel('y','FontSize', 14)
+zlabel('z','FontSize', 14)
