@@ -1,4 +1,4 @@
-function [theta] = trainTheta(data, t)
+function [theta_tx, theta_ty, theta_tz, trainTheta(data, t)
 
 for i = 1:size(data,2)
     % the absolute joint positions
@@ -23,12 +23,12 @@ for i = 1:size(data,2)
 end
 
 % Normal equations (slightly modified)
-theta.tx = Translate_x'*(inv(Input_x'*Input_x)*Input_x);
-theta.ty = Translate_y'*(inv(Input_y'*Input_y)*Input_y);
-theta.tz = Translate_z'*(inv(Input_z'*Input_z)*Input_z);
+theta_tx = Translate_x'*(inv(Input_x'*Input_x)*Input_x);
+theta_ty = Translate_y'*(inv(Input_y'*Input_y)*Input_y);
+theta_tz = Translate_z'*(inv(Input_z'*Input_z)*Input_z);
 
-theta.rx = Rotate_x'*(inv(Input_x'*Input_x)*Input_x);
-theta.ry = Rotate_y'*(inv(Input_y'*Input_y)*Input_y);
-theta.rz = Rotate_z'*(inv(Input_z'*Input_z)*Input_z);
+theta_rx = Rotate_x'*(inv(Input_x'*Input_x)*Input_x);
+theta_ry = Rotate_y'*(inv(Input_y'*Input_y)*Input_y);
+theta_rz = Rotate_z'*(inv(Input_z'*Input_z)*Input_z);
 
 end

@@ -1,9 +1,4 @@
-clear all;
-
-k = 31; % there are 31 joints in the CMU database
-
-% import data
-[t, data] = getData('CMU_walkcycles');
+function [clusters] = clusterJoints(data, k)
 
 msize = size(data,2);
 for i = 1:msize
@@ -24,10 +19,10 @@ clusters = zeros(msize, 1);
 swapped = true;
 
 %k-means algorithm
-while (swapped)
-    swapped = false;
-    oldclusters = clusters;
-    
+while (clusterConverged(oldcentroids, centroids))
+    %swapped = false;
+    %oldclusters = clusters;
+    oldcentroids = centroids;
     %find the minimum distance between each joint and the centroids
     for i = 1:msize
         min = 1000;
@@ -38,9 +33,9 @@ while (swapped)
                 clusters(i) = j;
             end
         end
-        if clusters(i) ~= oldclusters(i)
-            swapped = true;
-        end
+%         if clusters(i) ~= oldclusters(i)
+%             swapped = true;
+%         end
     end
     
     % reset the centroids
@@ -62,3 +57,5 @@ title('Joint Clusters', 'FontSize', 14)
 xlabel('x','FontSize', 14)
 ylabel('y','FontSize', 14)
 zlabel('z','FontSize', 14)
+
+end

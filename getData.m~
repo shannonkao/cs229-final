@@ -27,9 +27,7 @@ for i = 1:num_files
     
     num_joints = 0;
     for j = 1:size(skeleton,2)
-        
-        %do not include joints without tranformations
-        if size(skeleton(j).T,1) == 0  
+        if size(skeleton(j).T,1) == 0
             continue;
         end
         joint_info.abs_pos = absolute_transforms(j,:);
@@ -38,7 +36,7 @@ for i = 1:num_files
         joint_info.T = skeleton(j).T(:,:,1:time_step(i):end);
         transformations = [transformations, joint_info];
         
-        num_joints = num_joints + 1;
+        num_joints = n;
     end
     
     if max_num_joints < num_joints
