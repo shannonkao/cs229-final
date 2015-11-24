@@ -2,7 +2,7 @@ clear all;
 
 [t, k, data] = getData('CMU_walkcycles');
 % t is number of time points, k is number of joint clusters
-
+%%
 clusters = clusterJoints(data, k);
 
 for i = 1:k

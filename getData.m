@@ -32,10 +32,15 @@ for i = 1:num_files
         if size(skeleton(j).T,1) == 0  
             continue;
         end
+        
         joint_info.abs_pos = absolute_transforms(j,:);
         joint_info.t_xyz = skeleton(j).t_xyz(:,1:time_step(i):end);
         joint_info.R_xyz = skeleton(j).R_xyz(:,1:time_step(i):end);
         joint_info.T = skeleton(j).T(:,:,1:time_step(i):end);
+        joint_info.nestdepth = skeleton(j).nestdepth;
+        joint_info.num_children = size(skeleton(j).children,2);
+        joint_info.offsetFromParent = skeleton(j).offsetFromParent;
+        
         transformations = [transformations, joint_info];
         
         num_joints = num_joints + 1;

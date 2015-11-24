@@ -2,14 +2,23 @@ function [clusters] = clusterJoints(data, k)
 
 msize = size(data,2);
 for i = 1:msize
-    joints(i,:) = data(i).abs_pos;
+    joints(i,1) = data(i).abs_pos(1);
+    joints(i,2) = data(i).abs_pos(2);
+    joints(i,3) = data(i).abs_pos(3);
+    joints(i,4) = data(i).nestdepth;
+    joints(i,5) = data(i).num_children;
+    joints(i,6) = data(i).offsetFromParent(1);
+    joints(i,7) = data(i).offsetFromParent(2);
+    joints(i,8) = data(i).offsetFromParent(3);
+    %joints(i,9) = getMaxAmplitude(data(i).t_xyz);
+    %joints(i,10) = getMaxAmplitude(data(i).R_xyz);
 end
 
-% randomly assign starting centroids
-centroids = zeros(k,3);
+% assign starting centroids (randomly does not work, must find better way)
+centroids = zeros(k,size(joints,2));
 idx = randperm(msize);
 for i = 1:k
-    centroids(i,:) = joints(idx(i), :);
+    centroids(i,:) = joints(i, :);
 end
 
 % initialize vars for k-means algorithm
@@ -19,9 +28,9 @@ clusters = zeros(msize, 1);
 swapped = true;
 
 %k-means algorithm
-while (clusterConverged(oldcentroids, centroids))
-    %swapped = false;
-    %oldclusters = clusters;
+while (swapped)
+    swapped = false;
+    oldclusters = clusters;
     oldcentroids = centroids;
     %find the minimum distance between each joint and the centroids
     for i = 1:msize
@@ -33,9 +42,9 @@ while (clusterConverged(oldcentroids, centroids))
                 clusters(i) = j;
             end
         end
-%         if clusters(i) ~= oldclusters(i)
-%             swapped = true;
-%         end
+        if clusters(i) ~= oldclusters(i)
+            swapped = true;
+        end
     end
     
     % reset the centroids
