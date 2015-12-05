@@ -8,10 +8,11 @@ function [ rot ] = convertRotations( initial_position, pts )
 
     rot = zeros(size(pts));
     prev = initial_position;
-    for i=1:size(pts,2)
-        axisangle = vrrotvec(prev, pts(i,:));
-        quat = axang2quat(axisangle);
-        rot(i, :) = quat2angle(quat);
+    for i=1:size(pts,1)
+        axang = vrrotvec(prev, pts(i,:));
+        axang(4) = axang(4)*180.0/pi;
+        euler = SpinCalc('EVtoEA213', axang, 0.01);% axang2quat(axang); % can't access this func? :(
+        rot(i, :) = euler; % quat2angle(euler); % used with axang2quat
         prev = pts(i,:);
     end
 

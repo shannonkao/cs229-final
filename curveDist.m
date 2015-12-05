@@ -1,4 +1,4 @@
-function [ dist ] = curveDiff( x1, x2 )
+function [ dist ] = curveDist( x1, x2 )
 % takes as input two arrays x1, x2 of xyz points
 % returns the sum of squared difference 
 
