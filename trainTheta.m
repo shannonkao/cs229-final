@@ -23,6 +23,13 @@ for i = 1:size(data,2)
 end
 
 % Normal equations (slightly modified)
+% Matrix inversion sometimes fails when input is (0,0,0), outputs Nans.
+if sum(sum(Input_x + Input_y + Input_z)) == 0
+    small_epsilon = 0.00001;
+    Input_x = Input_x + small_epsilon;
+    Input_y = Input_y + small_epsilon;
+    Input_z = Input_z + small_epsilon;
+end
 theta.tx = Translate_x'*(inv(Input_x'*Input_x)*Input_x);
 theta.ty = Translate_y'*(inv(Input_y'*Input_y)*Input_y);
 theta.tz = Translate_z'*(inv(Input_z'*Input_z)*Input_z);
