@@ -1,0 +1,61 @@
+//get files//
+string $dir = "/Users/mh_neub/Documents/github/cs229-final";
+string $posXPath=($dir+"/posX.txt");
+string $posYPath=($dir+"/posY.txt");
+string $posZPath=($dir+"/posZ.txt");
+$posX=`fopen $posXPath "r"`;
+$posY=`fopen $posYPath "r"`;
+$posZ=`fopen $posZPath "r"`;
+//skip first line//
+string $txline=`fgetline $posX`;
+string $tyline=`fgetline $posY`;
+string $tzline=`fgetline $posZ`;
+
+string $jointNames[];
+tokenize $txline "\t" $jointNames;
+string $s = size($jointNames);
+print $s;
+for( $i=0; $i<size($jointNames); ++$i )
+{
+    string $name[];
+    tokenize $jointNames[$i] " " $name;
+    if(size($name)>1){
+        $jointNames[$i] = $name[0]+$name[1];
+    }
+    
+    joint -n $jointNames[$i] -p 0 0 0;
+    select -cl;
+}
+
+//read first word//
+string $txWord=`fgetword $posX`;
+string $tyWord=`fgetword $posY`;
+string $tzWord=`fgetword $posZ`;
+//input data into animation channels and set key frames//
+$i=0;
+$j=0;
+while (size($txWord)>0){
+    string $p = $txWord+" "+$tyWord+" "+$tzWord+"\n";
+    print $p;
+    float $tx=$txWord;
+    float $ty=$tyWord;
+    float $tz=$tzWord;
+    print $jointNames[$i];
+    move -a $tx $ty $tz $jointNames[$i];
+    setKeyframe -t $j -at translateX -at translateY -at translateZ $jointNames[$i];
+   
+    //read next word//
+    $txWord=`fgetword $posX`;
+    $tyWord=`fgetword $posY`;
+    $tzWord=`fgetword $posZ`;
+    $i=$i+1;
+     //rotate through joints and move to next frame if appropriate//
+    if ($i==size($jointNames)) {
+       $i=0;
+       $j=$j+1;
+    }
+}
+
+//select -all;
+//scaleKey -t ":" -ts 5;
+//select -cl;

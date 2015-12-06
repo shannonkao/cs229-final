@@ -1,4 +1,4 @@
-function [clusters] = clusterJoints(data, k)
+function [clusters, joints] = clusterJoints(data, k)
 
 msize = size(data,2);
 for i = 1:msize
