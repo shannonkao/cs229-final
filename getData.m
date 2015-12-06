@@ -14,11 +14,11 @@ max_num_joints = 0;
 
 for i = 1:num_files
     [skeleton,time] = loadbvh(fullfile(folderName, files(i).name));
-    
+
     % get absolute position
     t = zeros(size(skeleton,2), 3);
     root = skeleton(1);
-    absolute_transforms = getTransforms(skeleton, t, 1, root.offsetFromParent);
+    absolute_transforms = getTransforms(skeleton, t, 1, [0,0,0]');
     
     time_step(i) = round(0.033/(time(2)-time(1)));
     if size(time,2)/time_step(i) < num_points

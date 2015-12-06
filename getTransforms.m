@@ -8,7 +8,7 @@ function [ transforms ] = getTransforms( tree, transforms, node, parent_t )
     t = tree(node).offsetFromParent; % xyz translation
     children = tree(node).children;
     for i=1:size(children,2)
-        transforms = getTransforms(tree, transforms, children(i), t);
+        transforms = getTransforms(tree, transforms, children(i), t+parent_t);
     end
     transforms(node,:) = t + parent_t;
 end
