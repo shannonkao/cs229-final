@@ -26,6 +26,7 @@ for i = 1:num_files
     end
     
     num_joints = 0;
+    all_joints = [];
     for j = 1:size(skeleton,2)
         
         %do not include joints without tranformations
@@ -41,10 +42,13 @@ for i = 1:num_files
         joint_info.num_children = size(skeleton(j).children,2);
         joint_info.offsetFromParent = skeleton(j).offsetFromParent;
         
-        transformations = [transformations, joint_info];
+        all_joints = [all_joints joint_info];
         
         num_joints = num_joints + 1;
     end
+    
+    all_joints = scaleJoints(absolute_transforms, all_joints);
+    transformations = [transformations, all_joints];
     
     if max_num_joints < num_joints
         max_num_joints = num_joints;
