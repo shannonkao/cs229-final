@@ -43,6 +43,10 @@ while (size($txWord)>0){
     print $jointNames[$i];
     move -a $tx $ty $tz $jointNames[$i];
     setKeyframe -t $j -at translateX -at translateY -at translateZ $jointNames[$i];
+    //select $jointNames[$i];
+    //setKeyframe -v $tx -t $j -at rotateX;
+    //setKeyframe -v $ty -t $j -at rotateY;
+    //setKeyframe -v $tz -t $j -at rotateZ;
    
     //read next word//
     $txWord=`fgetword $posX`;
