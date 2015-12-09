@@ -16,6 +16,8 @@ end
 %% Train on one test skeleton then export file to visualize in Maya
 [t1, k1, skel] = getData('test_walkcycle');
 
+
+
 c = assignCluster(skel, clusters, joints);
 
 exportAbsoluteTranslations(theta, skel, c);

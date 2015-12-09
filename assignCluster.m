@@ -11,8 +11,7 @@ for i = 1:msize
     joint(i,6) = data(i).offsetFromParent(1);
     joint(i,7) = data(i).offsetFromParent(2);
     joint(i,8) = data(i).offsetFromParent(3);
-    %joints(i,9) = getMaxAmplitude(data(i).t_xyz);
-    %joints(i,10) = getMaxAmplitude(data(i).R_xyz);
+
 end
 
 for i = 1:msize

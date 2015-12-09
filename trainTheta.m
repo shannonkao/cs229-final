@@ -62,7 +62,7 @@ end
 % end
 
 alpha = 0.01;
-numIters = 10000;
+numIters = 1000;
 init_theta = zeros(size(Input,2),1);
 %init_theta = 2*rand(size(Input,2),1)-1;
 
