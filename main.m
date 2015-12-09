@@ -5,7 +5,7 @@ clear all;
 % t is number of time points, k is number of joint clusters
 %% train data
 [clusters, joints] = clusterJoints(data, k);
-
+%%
 for i = 1:k
     jointCluster = data(:, find(clusters == i));
     if size(jointCluster,2) > 0

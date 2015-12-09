@@ -1,7 +1,9 @@
 figure
 hold on
 for i = 1:length(theta)
-    plot(theta(i).tx);
+    if size(theta(i).tx,1) > 0
+        plot(theta(i).tx(1,:));
+    end
 end
 
 title('Theta for x translation', 'FontSize', 14)
@@ -11,7 +13,9 @@ ylabel('theta value','FontSize', 14)
 figure
 hold on
 for i = 1:length(theta)
-    plot(theta(i).ty);
+    if size(theta(i).ty,1) > 0
+        plot(theta(i).ty(1,:));
+    end
 end
 
 title('Theta for y translation', 'FontSize', 14)
@@ -21,7 +25,9 @@ ylabel('theta value','FontSize', 14)
 figure
 hold on
 for i = 1:length(theta)
-    plot(theta(i).tz);
+    if size(theta(i).tz,1) > 0
+        plot(theta(i).tz(1,:));
+    end
 end
 
 title('Theta for z translation', 'FontSize', 14)
@@ -31,7 +37,9 @@ ylabel('theta value','FontSize', 14)
 figure
 hold on
 for i = 1:length(theta)
-    plot(theta(i).rx);
+    if size(theta(i).rx,1) > 0
+        plot(theta(i).rx(1,:));
+    end
 end
 
 title('Theta for x rotation', 'FontSize', 14)
@@ -41,7 +49,9 @@ ylabel('theta value','FontSize', 14)
 figure
 hold on
 for i = 1:length(theta)
-    plot(theta(i).ry);
+    if size(theta(i).ry,1) > 0
+        plot(theta(i).ry(1,:));
+    end
 end
 
 title('Theta for y rotation', 'FontSize', 14)
@@ -51,7 +61,9 @@ ylabel('theta value','FontSize', 14)
 figure
 hold on
 for i = 1:length(theta)
-    plot(theta(i).rz);
+    if size(theta(i).rz,1) > 0
+        plot(theta(i).rz(1,:));
+    end
 end
 
 title('Theta for z rotation', 'FontSize', 14)

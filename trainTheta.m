@@ -2,14 +2,23 @@ function [theta] = trainTheta(data, t)
 
 for i = 1:size(data,2)
     % the absolute joint positions
-    Input_x(i,1) = data(i).abs_pos(1);
-    Input_y(i,1) = data(i).abs_pos(2);
-    Input_z(i,1) = data(i).abs_pos(3);
+%     Input_x(i,1) = data(i).abs_pos(1);
+%     Input_y(i,1) = data(i).abs_pos(2);
+%     Input_z(i,1) = data(i).abs_pos(3);
 %     joints(i,4) = data(i).nestdepth;
 %     joints(i,5) = data(i).num_children;
 %     joints(i,6) = data(i).offsetFromParent(1);
 %     joints(i,7) = data(i).offsetFromParent(2);
 %     joints(i,8) = data(i).offsetFromParent(3);
+
+    Input(i,1) = data(i).abs_pos(1);
+    Input(i,2) = data(i).abs_pos(2);
+    Input(i,3) = data(i).abs_pos(3);
+    Input(i,4) = data(i).nestdepth;
+    Input(i,5) = data(i).num_children;
+    Input(i,6) = data(i).offsetFromParent(1);
+    Input(i,7) = data(i).offsetFromParent(2);
+    Input(i,8) = data(i).offsetFromParent(3);
     
     % the translations
     Translate_x(i,:) = data(i).t_xyz(1,:);
@@ -41,12 +50,37 @@ end
 %     Input_z = Input_z + small_epsilon;
 % end
 
-theta.tx = (inv(Input_x'*Input_x)*Input_x')*Translate_x;
-theta.ty = (inv(Input_y'*Input_y)*Input_y')*Translate_y;
-theta.tz = (inv(Input_z'*Input_z)*Input_z')*Translate_z;
+% for i = 1:t
+%     inputMatrix = Input;
+%     theta_tx(:,i) = (inv(inputMatrix'*inputMatrix)*inputMatrix')*Translate_x(:,i);
+%     theta_ty(:,i) = (inv(inputMatrix'*inputMatrix)*inputMatrix')*Translate_y(:,i);
+%     theta_tz(:,i) = (inv(inputMatrix'*inputMatrix)*inputMatrix')*Translate_z(:,i);
+% 
+%     theta_rx(:,i) = (inv(inputMatrix'*inputMatrix)*inputMatrix')*Rotate_x(:,i);
+%     theta_ry(:,i) = (inv(inputMatrix'*inputMatrix)*inputMatrix')*Rotate_y(:,i);
+%     theta_rz(:,i) = (inv(inputMatrix'*inputMatrix)*inputMatrix')*Rotate_z(:,i);
+% end
 
-theta.rx = (inv(Input_x'*Input_x)*Input_x')*Rotate_x;
-theta.ry = (inv(Input_y'*Input_y)*Input_y')*Rotate_y;
-theta.rz = (inv(Input_z'*Input_z)*Input_z')*Rotate_z;
+alpha = 0.01;
+numIters = 10000;
+init_theta = zeros(size(Input,2),1);
+%init_theta = 2*rand(size(Input,2),1)-1;
+
+for i = 1:t
+    [theta_tx(:,i), cost_tx(:,i)] = gradientDescent(Input, init_theta, Translate_x(:,i), alpha, numIters);
+    [theta_ty(:,i), cost_ty(:,i)] = gradientDescent(Input, init_theta, Translate_y(:,i), alpha, numIters);
+    [theta_tz(:,i), cost_tz(:,i)] = gradientDescent(Input, init_theta, Translate_z(:,i), alpha, numIters);
+    [theta_rx(:,i), cost_rx(:,i)] = gradientDescent(Input, init_theta, Rotate_x(:,i), alpha, numIters);
+    [theta_ry(:,i), cost_ry(:,i)] = gradientDescent(Input, init_theta, Rotate_y(:,i), alpha, numIters);
+    [theta_rz(:,i), cost_rz(:,i)] = gradientDescent(Input, init_theta, Rotate_z(:,i), alpha, numIters);
+end
+
+
+theta.tx = theta_tx;
+theta.ty = theta_ty;
+theta.tz = theta_tz;
+theta.rx = theta_rx;
+theta.ry = theta_ry;
+theta.rz = theta_rz;
 
 end
