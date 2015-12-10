@@ -3,7 +3,15 @@ function [positions] = exportAbsoluteTranslations(theta, joints, cluster)
 j = 1;
 
 for i = 1:max(cluster)
-        
+    
+    if cluster(j) == 0
+        position(:,i,1) = zeros(size(theta(1).rx,2),1);
+        position(:,i,2) = zeros(size(theta(1).rx,2),1);
+        position(:,i,3) = zeros(size(theta(1).rx,2),1);
+        j = j+1;
+        continue;
+    end
+    
     data = joints(cluster(j));
     
     % multiple joints in same cluster
@@ -24,9 +32,12 @@ for i = 1:max(cluster)
            positions(:,l,2) = theta(i).ty'*Input';
            positions(:,l,3) = theta(i).tz'*Input';
         else
-           positions(:,l,1) = joints(cluster(j)).abs_pos(1)*ones(size(theta(1).rx,2),1);
-           positions(:,l,2) = joints(cluster(j)).abs_pos(2)*ones(size(theta(1).ry,2),1);
-           positions(:,l,3) = joints(cluster(j)).abs_pos(3)*ones(size(theta(1).rz,2),1); 
+%            positions(:,l,1) = joints(cluster(j)).abs_pos(1)*ones(size(theta(1).rx,2),1);
+%            positions(:,l,2) = joints(cluster(j)).abs_pos(2)*ones(size(theta(1).ry,2),1);
+%            positions(:,l,3) = joints(cluster(j)).abs_pos(3)*ones(size(theta(1).rz,2),1);
+            position(:,l,1) = zeros(size(theta(1).rx,2),1);
+            position(:,l,2) = zeros(size(theta(1).rx,2),1);
+            position(:,l,3) = zeros(size(theta(1).rx,2),1);
         end
     
     end

@@ -20,7 +20,7 @@ end
 centroids = zeros(k,size(joints,2));
 idx = randperm(msize);
 for i = 1:k
-    centroids(i,:) = joints(i, :);
+    centroids(i,:) = joints(idx(i), :);
 end
 
 % initialize vars for k-means algorithm
@@ -53,9 +53,13 @@ while (swapped)
     % reset the centroids
     for i = 1:k
         indices = find(clusters == i);
-        centroids(i,1:8) = mean(joints(indices, 1:8));
-        curves(size(curves,1)+1,:,:) = mean(curves(joints(indices,9),:,:));
-        centroids(i,9) = size(curves,1);
+        if size(indices,2) == 0
+            centroids(i,:) = joints(floor(rand*msize), :);
+        else
+            centroids(i,1:8) = mean(joints(indices, 1:8));
+            curves(size(curves,1)+1,:,:) = mean(curves(joints(indices,9),:,:));
+            centroids(i,9) = size(curves,1);
+        end
     end
     count = count + 1
 end
