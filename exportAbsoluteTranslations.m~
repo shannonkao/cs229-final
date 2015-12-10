@@ -3,11 +3,13 @@ function [positions] = exportAbsoluteTranslations(theta, joints, cluster)
 j = 1;
 
 for i = 1:max(cluster)
-        
-    data = joints(cluster(j),:);
+    
+    if (clu
+    
+    data = joints(cluster(j));
     
     % multiple joints in same cluster
-    for k = 1:size(data,2)
+    for k = 1:size(data,1)
         l = i+k-1;
         Input(1) = data(k).abs_pos(1);
         Input(2) = data(k).abs_pos(2);
@@ -20,23 +22,27 @@ for i = 1:max(cluster)
 
         if (size(theta(i).rx,1) > 0)% ...
            % && (sum(isnan(theta(i).rx) + isnan(theta(i).ry) + isnan(theta(i).rz)) == 0)
-           positions(:,l,1) = theta(i).tx*Input;
-           positions(:,l,2) = theta(i).ty*Input;
-           positions(:,l,3) = theta(i).tz*Input;
+           positions(:,l,1) = theta(i).tx'*Input';
+           positions(:,l,2) = theta(i).ty'*Input';
+           positions(:,l,3) = theta(i).tz'*Input';
         else
-           positions(:,l,1) = joints(cluster(j)).abs_pos(1)*ones(size(theta(1).rx));
-           positions(:,l,2) = joints(cluster(j)).abs_pos(2)*ones(size(theta(1).ry));
-           positions(:,l,3) = joints(cluster(j)).abs_pos(3)*ones(size(theta(1).rz)); 
+%            positions(:,l,1) = joints(cluster(j)).abs_pos(1)*ones(size(theta(1).rx,2),1);
+%            positions(:,l,2) = joints(cluster(j)).abs_pos(2)*ones(size(theta(1).ry,2),1);
+%            positions(:,l,3) = joints(cluster(j)).abs_pos(3)*ones(size(theta(1).rz,2),1);
+            position(:,l,1) = zeros(size(theta(1).rx,2),1);
+            position(:,l,2) = zeros(size(theta(1).rx,2),1);
+            position(:,l,3) = zeros(size(theta(1).rx,2),1);
         end
     
     end
     j = j+1;
 end
     
-    posX=dataset(positions(:,:,1));
-    export(posX, 'WriteVarNames', true);
-    posY=dataset(positions(:,:,2));
-    export(posY, 'WriteVarNames', true);
-    posZ=dataset(positions(:,:,3));
-    export(posZ, 'WriteVarNames', true);
+posX=dataset(positions(:,:,1));
+export(posX, 'WriteVarNames', true);
+posY=dataset(positions(:,:,2));
+export(posY, 'WriteVarNames', true);
+posZ=dataset(positions(:,:,3));
+export(posZ, 'WriteVarNames', true);
+
 end
