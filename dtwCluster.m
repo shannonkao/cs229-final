@@ -1,13 +1,13 @@
-function [clusters, joints, curves] = dtwCluster(data, k)
+function [clusters, joints] = dtwCluster(data, k)
 
 msize = size(data,2);
 for i = 1:msize
-    joints(i,1,:) = data(i).t_xyz(1,:);
-    joints(i,2,:) = data(i).t_xyz(2,:);
-    joints(i,3,:) = data(i).t_xyz(3,:);
-    joints(i,4,:) = data(i).R_xyz(1,:);
-    joints(i,5,:) = data(i).R_xyz(2,:);
-    joints(i,6,:) = data(i).R_xyz(3,:);
+    joints(i,1,:) = data(i).R_xyz(1,:);
+    joints(i,2,:) = data(i).R_xyz(2,:);
+    joints(i,3,:) = data(i).R_xyz(3,:);
+    %joints(i,4,:) = data(i).R_xyz(1,:);
+    %joints(i,5,:) = data(i).R_xyz(2,:);
+    %joints(i,6,:) = data(i).R_xyz(3,:);
 end
 
 centroids = zeros(k,size(joints,2), size(joints,3));

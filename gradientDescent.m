@@ -18,5 +18,4 @@ for iter=1:numIters
     theta = theta - (alpha/m)*tempVal;
     
     CostHistory(iter,1) = cost(X,y,theta);
- 
 end

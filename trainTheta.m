@@ -61,7 +61,7 @@ end
 %     theta_rz(:,i) = (inv(inputMatrix'*inputMatrix)*inputMatrix')*Rotate_z(:,i);
 % end
 
-alpha = 0.01;
+alpha = .01;
 numIters = 1000;
 init_theta = zeros(size(Input,2),1);
 %init_theta = 2*rand(size(Input,2),1)-1;

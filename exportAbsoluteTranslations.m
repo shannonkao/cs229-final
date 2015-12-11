@@ -43,7 +43,42 @@ for i = 1:max(cluster)
     end
     j = j+1;
 end
-    
+
+figure
+
+subplot(1,3,1)
+hold on
+for i = 1:size(positions,2)
+    plot(positions(:,i,1)', 'b');
+end
+hold off
+title('X Translation', 'FontSize', 14)
+xlabel('time','FontSize', 14)
+axis tight
+%ylabel('theta value','FontSize', 14)
+
+subplot(1,3,2)
+hold on
+for i = 1:size(positions,2)
+    plot(positions(:,i,2)', 'b');
+end
+hold off
+title('Y Translation', 'FontSize', 14)
+xlabel('time','FontSize', 14)
+axis tight
+%ylabel('theta value','FontSize', 14)
+
+subplot(1,3,3)
+hold on
+for i = 1:size(positions,2)
+    plot(positions(:,i,3)', 'b');
+end
+hold off
+title('Z Translation', 'FontSize', 14)
+xlabel('time','FontSize', 14)
+axis tight
+%ylabel('theta value','FontSize', 14)
+
 posX=dataset(positions(:,:,1));
 export(posX, 'WriteVarNames', true);
 posY=dataset(positions(:,:,2));
