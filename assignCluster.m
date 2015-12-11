@@ -11,9 +11,6 @@ for i = 1:msize
     joint(i,6) = data(i).offsetFromParent(1);
     joint(i,7) = data(i).offsetFromParent(2);
     joint(i,8) = data(i).offsetFromParent(3);
-    joint(i,9) = i;
-    %joints(i,9) = getMaxAmplitude(data(i).t_xyz);
-    %joints(i,10) = getMaxAmplitude(data(i).R_xyz);
 end
 
 c = zeros(1,msize);
@@ -21,9 +18,7 @@ for i = 1:msize
     min = flintmax;
     for j = 1:k
         indices = find(clusters == j);
-        dist = norm(mean(joints(indices, 1:8)) - joint(i,1:8));
-        curve = mean(curves(joints(indices,9),:,:));
-        dist = dist + curveDist(curve, curves(joint(i,9),:,:))/90.0;
+        dist = norm(mean(joints(indices, :)) - joint(i,:));
         if dist < min
             if size(find(c == j),2) == 0
                 min = dist;
