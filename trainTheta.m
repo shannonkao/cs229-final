@@ -61,8 +61,8 @@ end
 %     theta_rz(:,i) = (inv(inputMatrix'*inputMatrix)*inputMatrix')*Rotate_z(:,i);
 % end
 
-alpha = .01;
-numIters = 1000;
+alpha = .1;
+numIters = 200;
 init_theta = zeros(size(Input,2),1);
 %init_theta = 2*rand(size(Input,2),1)-1;
 
@@ -75,6 +75,12 @@ for i = 1:t
     [theta_rz(:,i), cost_rz(:,i)] = gradientDescent(Input, init_theta, Rotate_z(:,i), alpha, numIters);
 end
 
+% for i = 1:size(cost_tx, 1)
+%     figure
+%     plot(cost_tx(:,1))
+% end
+
+plot(cost_ty(:,4))
 
 theta.tx = theta_tx;
 theta.ty = theta_ty;

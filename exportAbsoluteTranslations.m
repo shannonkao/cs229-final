@@ -31,6 +31,9 @@ for i = 1:max(cluster)
            positions(:,l,1) = theta(i).tx'*Input';
            positions(:,l,2) = theta(i).ty'*Input';
            positions(:,l,3) = theta(i).tz'*Input';
+           positions(:,l,4) = theta(i).rx'*Input';
+           positions(:,l,5) = theta(i).ry'*Input';
+           positions(:,l,6) = theta(i).rz'*Input';
         else
 %            positions(:,l,1) = joints(cluster(j)).abs_pos(1)*ones(size(theta(1).rx,2),1);
 %            positions(:,l,2) = joints(cluster(j)).abs_pos(2)*ones(size(theta(1).ry,2),1);
@@ -38,6 +41,9 @@ for i = 1:max(cluster)
             position(:,l,1) = zeros(size(theta(1).rx,2),1);
             position(:,l,2) = zeros(size(theta(1).rx,2),1);
             position(:,l,3) = zeros(size(theta(1).rx,2),1);
+            position(:,l,4) = zeros(size(theta(1).rx,2),1);
+            position(:,l,5) = zeros(size(theta(1).rx,2),1);
+            position(:,l,6) = zeros(size(theta(1).rx,2),1);
         end
     
     end
@@ -46,7 +52,7 @@ end
 
 figure
 
-subplot(1,3,1)
+subplot(2,3,1)
 hold on
 for i = 1:size(positions,2)
     plot(positions(:,i,1)', 'b');
@@ -57,7 +63,7 @@ xlabel('time','FontSize', 14)
 axis tight
 %ylabel('theta value','FontSize', 14)
 
-subplot(1,3,2)
+subplot(2,3,2)
 hold on
 for i = 1:size(positions,2)
     plot(positions(:,i,2)', 'b');
@@ -68,7 +74,7 @@ xlabel('time','FontSize', 14)
 axis tight
 %ylabel('theta value','FontSize', 14)
 
-subplot(1,3,3)
+subplot(2,3,3)
 hold on
 for i = 1:size(positions,2)
     plot(positions(:,i,3)', 'b');
@@ -78,6 +84,37 @@ title('Z Translation', 'FontSize', 14)
 xlabel('time','FontSize', 14)
 axis tight
 %ylabel('theta value','FontSize', 14)
+subplot(2,3,4)
+hold on
+for i = 1:size(positions,2)
+    plot(positions(:,i,4)', 'b');
+end
+hold off
+title('X Rotation', 'FontSize', 14)
+xlabel('time','FontSize', 14)
+axis tight
+%ylabel('theta value','FontSize', 14)
+
+subplot(2,3,5)
+hold on
+for i = 1:size(positions,2)
+    plot(positions(:,i,5)', 'b');
+end
+hold off
+title('Y Rotation', 'FontSize', 14)
+xlabel('time','FontSize', 14)
+axis tight
+%ylabel('theta value','FontSize', 14)
+
+subplot(2,3,6)
+hold on
+for i = 1:size(positions,2)
+    plot(positions(:,i,6)', 'b');
+end
+hold off
+title('Z Rotation', 'FontSize', 14)
+xlabel('time','FontSize', 14)
+axis tight
 
 posX=dataset(positions(:,:,1));
 export(posX, 'WriteVarNames', true);

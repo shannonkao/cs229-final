@@ -82,10 +82,36 @@ for i = 1:k
     j = find(clusters == i);
     scatter3(joints(j,1), joints(j,2), joints(j,3), marker(1+mod(i,13)));
 end
+hold off
+title('Front', 'FontSize', 24)
+xlabel('x','FontSize', 24)
+ylabel('y','FontSize', 24)
+zlabel('z','FontSize', 24)
 
-title('Joint Clusters', 'FontSize', 14)
-xlabel('x','FontSize', 14)
-ylabel('y','FontSize', 14)
-zlabel('z','FontSize', 14)
+figure
+hold on
+marker = ['o', '+', '*', '.', 'x', 's', 'd', '^', 'v', '>', '<', 'p', 'h'];
+for i = 1:k
+    j = find(clusters == i);
+    scatter3(joints(j,1), joints(j,2), joints(j,3), marker(1+mod(i,13)));
+end
+hold off
+title('Top', 'FontSize', 24)
+xlabel('x','FontSize', 24)
+ylabel('y','FontSize', 24)
+zlabel('z','FontSize', 24)
+
+figure
+hold on
+marker = ['o', '+', '*', '.', 'x', 's', 'd', '^', 'v', '>', '<', 'p', 'h'];
+for i = 1:k
+    j = find(clusters == i);
+    scatter3(joints(j,1), joints(j,3), joints(j,2), marker(1+mod(i,13)));
+end
+hold off
+title('Side', 'FontSize', 24)
+xlabel('x','FontSize', 24)
+ylabel('z','FontSize', 24)
+zlabel('y','FontSize', 24)
 
 end
